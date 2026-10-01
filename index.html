@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Strategy Call | AI & Workflow Automation</title>
+
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --border-subtle: #f1f5f9;
+      --input-bg: #ffffff;
+      --input-border: #cbd5e1;
+      --accent: #059669;
+      --accent-hover: #047857;
+      --accent-disabled: #a7f3d0;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --error-bg: #fef2f2;
+      --error-border: #fecaca;
+      --error-text: #991b1b;
+      --success-bg: #ecfdf5;
+      --success-border: #a7f3d0;
+      --success-text: #065f46;
+      --radius: 4px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 72px 24px;
+      line-height: 1.5;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    /* Left Value Proposition Section */
+    .brand-section {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      padding-top: 12px;
+    }
+
+    .badge {
+      align-self: flex-start;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      border-radius: var(--radius);
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    /* Small detail accent */
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .brand-title {
+      font-size: clamp(2.3rem, 4vw, 3.25rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+    }
+
+    .brand-title span {
+      background: none;
+      -webkit-text-fill-color: initial;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .brand-desc {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-top: 8px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.925rem;
+      line-height: 1.5;
+      color: var(--text-secondary);
+    }
+
+    .feature-item strong {
+      color: var(--text-primary);
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      color: var(--accent);
+    }
+
+    /* Right Form Card / Container */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    }
+
+    .card-header {
+      margin-bottom: 32px;
+    }
+
+    .card-title {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .card-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    /* Form Fields Grid */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.775rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #334155;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .optional-tag {
+      font-weight: 400;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    /* Inputs: clean crisp light outline style */
+    input, select, textarea {
+      font-family: inherit;
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      font-size: 0.95rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+      background: var(--input-bg);
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    select option {
+      background-color: #ffffff;
+      color: var(--text-primary);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+      line-height: 1.5;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background-color: var(--accent);
+      color: #ffffff;
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 14px 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      margin-top: 6px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background-color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .submit-btn:disabled {
+      background-color: var(--accent-disabled);
+      border-color: var(--accent-disabled);
+      color: #065f46;
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      display: none;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .is-loading .spinner {
+      display: inline-block;
+    }
+
+    .is-loading .btn-text {
+      opacity: 0.9;
+    }
+
+    /* Feedback Banner States */
+    .status-banner {
+      display: none;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      line-height: 1.45;
+      margin-bottom: 24px;
+    }
+
+    .status-banner.error {
+      background-color: var(--error-bg);
+      border: 1px solid var(--error-border);
+      color: var(--error-text);
+    }
+
+    .status-banner.is-visible {
+      display: flex;
+    }
+
+    .status-icon {
+      flex-shrink: 0;
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+    }
+
+    /* Success View */
+    .success-view {
+      display: none;
+      text-align: center;
+      padding: 40px 16px;
+    }
+
+    .success-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius);
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+    }
+
+    .success-icon-wrap svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .success-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+
+    .success-msg {
+      color: var(--text-secondary);
+      font-size: 0.975rem;
+      max-width: 400px;
+      margin: 0 auto 28px auto;
+      line-height: 1.55;
+    }
+
+    .reset-btn {
+      background: #ffffff;
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    .reset-btn:hover {
+      background: #f1f5f9;
+      color: var(--text-primary);
+    }
+
+    .privacy-notice {
+      font-size: 0.775rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 12px;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 900px) {
+      body {
+        padding: 48px 20px;
+      }
+
+      .wrapper {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .card {
+        padding: 36px 28px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 28px 16px;
+      }
+
+      .card {
+        padding: 24px 18px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrapper">
+    <!-- Value Proposition Section -->
+    <section class="brand-section">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Enterprise Automation Agency
+      </div>
+
+      <h1 class="brand-title">
+        Scale your operations with <span>intelligent automation</span>.
+      </h1>
+
+      <p class="brand-desc">
+        We architect custom AI workflows, autonomous n8n pipelines, and system integrations that eliminate operational bottlenecks and multiply your team's output.
+      </p>
+
+      <ul class="feature-list">
+        <li class="feature-item">
+          <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <span><strong>Tailored Strategy:</strong> High-impact workflow audit aligned with your tech stack.</span>
+        </li>
+        <li class="feature-item">
+          <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span><strong>Fast Response:</strong> Confirmed call slot and direct follow-up within 24 hours.</span>
+        </li>
+        <li class="feature-item">
+          <svg class="feature-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <span><strong>Guaranteed ROI:</strong> Clear feasibility assessment and timeline before kickoff.</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Form Section -->
+    <main class="card">
+      <!-- Error Message Banner (Preserves data on failure) -->
+      <div id="errorBanner" class="status-banner error" role="alert" aria-live="assertive" style="display: none;">
+        <svg class="status-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="errorMessage">Unable to submit request. Please try again.</span>
+      </div>
+
+      <!-- Lead Capture Form -->
+      <form id="strategyCallForm" novalidate>
+        <div class="card-header">
+          <h2 class="card-title">Book a Strategy Call</h2>
+          <p class="card-subtitle">Tell us about your processes and let's explore automation opportunities.</p>
+        </div>
+
+        <div class="form-grid">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input 
+              type="text" 
+              id="fullName" 
+              name="fullName" 
+              placeholder="e.g. Alex Morgan" 
+              required 
+              autocomplete="name"
+            >
+          </div>
+
+          <!-- Work Email -->
+          <div class="form-group">
+            <label for="email">Work Email *</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="alex@company.com" 
+              required 
+              autocomplete="email"
+            >
+          </div>
+
+          <!-- Company Name -->
+          <div class="form-group">
+            <label for="companyName">Company Name *</label>
+            <input 
+              type="text" 
+              id="companyName" 
+              name="companyName" 
+              placeholder="Acme Inc." 
+              required 
+              autocomplete="organization"
+            >
+          </div>
+
+          <!-- Company Website -->
+          <div class="form-group">
+            <label for="companyWebsite">
+              Company Website
+              <span class="optional-tag">Optional</span>
+            </label>
+            <input 
+              type="url" 
+              id="companyWebsite" 
+              name="companyWebsite" 
+              placeholder="https://example.com" 
+              autocomplete="url"
+            >
+          </div>
+
+          <!-- Problem to Automate -->
+          <div class="form-group full-width">
+            <label for="problem">What problem are you hoping to automate? *</label>
+            <textarea 
+              id="problem" 
+              name="problem" 
+              placeholder="Describe your current manual bottlenecks, repetitive workflows, or systems you'd like connected..."
+              required
+            ></textarea>
+          </div>
+
+          <!-- Budget Range -->
+          <div class="form-group full-width">
+            <label for="budget">Estimated monthly budget *</label>
+            <select id="budget" name="budget" required>
+              <option value="" disabled selected>Select your target monthly budget</option>
+              <option value="<$500">&lt;$500</option>
+              <option value="$500-2000">$500-2000</option>
+              <option value="$2000-5000">$2000-5000</option>
+              <option value="$5000+">$5000+</option>
+            </select>
+          </div>
+
+          <!-- Honeypot anti-spam field (hidden from real users) -->
+          <div style="position: absolute; left: -9999px; top: -9999px; opacity: 0; pointer-events: none;" aria-hidden="true">
+            <label for="contactPreference">Contact Preference</label>
+            <input 
+              type="text" 
+              id="contactPreference" 
+              name="contactPreference" 
+              tabindex="-1" 
+              autocomplete="off"
+            >
+          </div>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-text">Schedule Strategy Session</span>
+        </button>
+
+        <p class="privacy-notice">
+          🔒 We respect your privacy. No spam — strictly actionable consultation.
+        </p>
+      </form>
+
+      <!-- Success View -->
+      <div id="successView" class="success-view" role="status" aria-live="polite">
+        <div class="success-icon-wrap">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 class="success-title">Call Request Received!</h3>
+        <p class="success-msg">
+          Thanks, we'll be in touch within 24 hours with custom scheduling times and audit insights.
+        </p>
+        <button type="button" id="resetBtn" class="reset-btn">
+          Submit another request
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURATION
+    // Replace the URL below with your actual webhook endpoint (e.g. n8n, Make, Zapier)
+    // =========================================================================
+    const PRODUCTION_WEBHOOK_URL = 'https://hamza-automation.duckdns.org/webhook/new-lead';
+
+    // DOM Elements
+    const form = document.getElementById('strategyCallForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = submitBtn.querySelector('.btn-text');
+    const errorBanner = document.getElementById('errorBanner');
+    const errorMessage = document.getElementById('errorMessage');
+    const successView = document.getElementById('successView');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Hide error banner helper
+    function clearError() {
+      errorBanner.classList.remove('is-visible');
+      errorBanner.style.display = 'none';
+      errorMessage.textContent = '';
+    }
+
+    // Show error banner helper
+    function showError(message) {
+      errorMessage.textContent = message || 'An unexpected error occurred. Please try again.';
+      errorBanner.classList.add('is-visible');
+      errorBanner.style.display = 'flex';
+      errorBanner.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Toggle loading state
+    function setLoading(isLoading) {
+      if (isLoading) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        btnText.textContent = 'Sending request...';
+      } else {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('is-loading');
+        btnText.textContent = 'Schedule Strategy Session';
+      }
+    }
+
+    // Form submission handler
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearError();
+
+      // Basic client-side validation check
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      // Collect form values into clean JSON object
+      const formData = {
+        fullName: form.fullName.value.trim(),
+        email: form.email.value.trim(),
+        companyName: form.companyName.value.trim(),
+        companyWebsite: form.companyWebsite.value.trim() || null,
+        problem: form.problem.value.trim(),
+        budget: form.budget.value,
+        contactPreference: form.contactPreference.value,
+        submittedAt: new Date().toISOString()
+      };
+
+      // Ensure webhook URL has been configured
+      if (!PRODUCTION_WEBHOOK_URL) {
+        showError('Please configure a valid webhook URL in the script.');
+        return;
+      }
+
+      setLoading(true);
+
+      try {
+        const response = await fetch(PRODUCTION_WEBHOOK_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+          throw new Error(`Server returned status ${response.status} (${response.statusText || 'Error'})`);
+        }
+
+        // Display success view; hide form
+        form.style.display = 'none';
+        successView.style.display = 'block';
+
+      } catch (err) {
+        // Keep entered data intact in the form fields and show descriptive error
+        console.error('Submission failed:', err);
+        showError(
+          err.message.includes('Failed to fetch') 
+            ? 'Network error: Unable to reach the server. Please check your connection or CORS settings and try again.'
+            : `Failed to submit: ${err.message}. Your entries have been saved, please try again.`
+        );
+      } finally {
+        setLoading(false);
+      }
+    });
+
+    // Reset button handler to submit another request
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      clearError();
+      successView.style.display = 'none';
+      form.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
