@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lead Qualification Automation — Case Study</title>
+<style>
+  :root {
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --line: #e2e8f0;
+    --line-subtle: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-body: #334155;
+    --text-muted: #64748b;
+    --accent: #059669;
+    --accent-hover: #047857;
+    --accent-light: #ecfdf5;
+    --accent-border: #a7f3d0;
+    --accent-dot: #10b981;
+    --radius: 4px;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: inherit; margin: 0; padding: 0; }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  body {
+    background: var(--bg);
+    color: var(--text-body);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem 6rem;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #065f46;
+    background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.75rem;
+  }
+  .tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-dot);
+  }
+  h1 {
+    font-size: 2.45rem;
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    max-width: 22ch;
+  }
+  .lede {
+    color: var(--text-muted);
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin-top: 1.25rem;
+    max-width: 62ch;
+  }
+  .links {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    margin-top: 2.25rem;
+  }
+  .links a {
+    color: #ffffff;
+    background: var(--accent);
+    text-decoration: none;
+    padding: 0.75rem 1.35rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border: 1px solid var(--accent);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+  }
+  .links a:hover {
+    background: var(--accent-hover);
+    border-color: var(--accent-hover);
+  }
+  .links a.secondary {
+    background: var(--surface);
+    color: var(--text-primary);
+    border: 1px solid var(--line);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+  .links a.secondary:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+  section {
+    margin-top: 3.5rem;
+    padding-top: 3.5rem;
+    border-top: 1px solid var(--line);
+  }
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+  p {
+    color: var(--text-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    max-width: 68ch;
+  }
+  p + p {
+    margin-top: 1rem;
+  }
+  .flow {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 1.3rem 1.5rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    overflow-x: auto;
+    margin-top: 1.25rem;
+    line-height: 1.85;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  }
+  ul {
+    margin-top: 1rem;
+    padding-left: 1.25rem;
+    color: var(--text-body);
+  }
+  li {
+    margin-bottom: 0.75rem;
+    line-height: 1.65;
+  }
+  li b {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1.25rem;
+  }
+  .stack span {
+    font-size: 0.82rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--text-primary);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  }
+  .qa {
+    margin-top: 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.4rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  }
+  .qa .q {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.98rem;
+    letter-spacing: -0.01em;
+  }
+  .qa .a {
+    color: var(--text-body);
+    margin-top: 0.4rem;
+    font-size: 0.93rem;
+    line-height: 1.65;
+  }
+  .qa + .qa {
+    margin-top: 1rem;
+  }
+  footer {
+    margin-top: 4.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+  footer a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  footer a:hover {
+    text-decoration: underline;
+  }
+  footer .muted {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+  @media (max-width: 540px) {
+    h1 { font-size: 2rem; }
+    .wrap { padding: 3.5rem 1.25rem 4rem; }
+    .links { flex-direction: column; }
+    .links a { text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="tag">
+    <span class="tag-dot"></span>
+    Project 2 — Business Automation
+  </span>
+  <h1>A lead qualification system that scores, drafts outreach, and logs every submission automatically</h1>
+  <p class="lede">
+    Built with n8n, Claude, and a self-hosted $0/month infrastructure stack —
+    end to end, from public intake form to CRM, with a human approval step
+    and real error handling in between.
+  </p>
+
+  <div class="links">
+    <a href="https://n8n-automation-agent.vercel.app/" target="_blank" rel="noopener noreferrer">View live dashboard</a>
+    <a href="https://n8n-automation-agent.vercel.app/lead-form.html" target="_blank" rel="noopener noreferrer" class="secondary">Try the intake form</a>
+    <a href="mailto:ch.hamzagorya.794@gmail.com" class="secondary">Contact</a>
+  </div>
+
+  <section>
+    <h2>The problem this solves</h2>
+    <p>
+      Most inbound leads lose intent within minutes of submitting a form.
+      A human reviewing and replying to every lead by hand doesn't scale,
+      and generic auto-replies get ignored. This system scores each lead
+      for fit automatically, drafts a first-touch message that references
+      what the lead actually asked for, and puts the final decision in
+      front of a person before anything goes out.
+    </p>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <div class="flow">
+Form submission
+&nbsp;&nbsp;→ validated (honeypot + email check)
+&nbsp;&nbsp;→ scored and drafted by Claude
+&nbsp;&nbsp;→ logged to Sheets
+&nbsp;&nbsp;→ sent to Slack for approval
+&nbsp;&nbsp;→ approved leads pushed to HubSpot
+&nbsp;&nbsp;→ dashboard reflects it all in real time
+    </div>
+  </section>
+
+  <section>
+    <h2>What makes it a real system, not a demo</h2>
+    <ul>
+      <li><b>Validation before cost.</b> A honeypot field and email check filter out spam before it ever reaches a paid AI call.</li>
+      <li><b>Graceful AI failure.</b> If the scoring call fails, the lead is still logged — flagged "Needs Review" instead of lost.</li>
+      <li><b>Human in the loop.</b> Every AI-drafted message goes to Slack for a person to approve before it's treated as real.</li>
+      <li><b>Deduplication.</b> Approved leads upsert into the CRM by email, so a repeat submission updates rather than duplicates.</li>
+      <li><b>Retries and alerts.</b> External calls retry automatically on failure, and any unhandled error pings a dedicated Slack channel with the exact node that broke.</li>
+      <li><b>A visible audit trail.</b> The dashboard shows what was processed, what was rejected, and why — not just a black box.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Stack</h2>
+    <div class="stack">
+      <span>n8n (self-hosted)</span>
+      <span>Claude API</span>
+      <span>Oracle Cloud</span>
+      <span>Docker + Caddy</span>
+      <span>Google Sheets</span>
+      <span>Slack</span>
+      <span>HubSpot</span>
+      <span>Next.js</span>
+      <span>Vercel</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Notes on the build</h2>
+    <div class="qa">
+      <div class="q">Why self-host n8n instead of n8n Cloud?</div>
+      <div class="a">No per-execution limits, no monthly fee, and it's the same setup I'd recommend to a cost-conscious client — full control over the server for $0.</div>
+    </div>
+    <div class="qa">
+      <div class="q">Why an approval step instead of fully autonomous outreach?</div>
+      <div class="a">Businesses don't trust an AI to message prospects unsupervised. A person reviews the draft in Slack and approves it with one click — the AI recommends, a human decides.</div>
+    </div>
+    <div class="qa">
+      <div class="q">What would change for a real client deployment?</div>
+      <div class="a">Move from SQLite to Postgres past a certain volume, split AI scoring from outreach drafting to only pay for drafts on qualified leads, and add authentication to the dashboard.</div>
+    </div>
+  </section>
+
+  <footer>
+    <div><a href="mailto:ch.hamzagorya.794@gmail.com">ch.hamzagorya.794@gmail.com</a></div>
+    <div class="muted">Open to freelance automation builds and AI engineering roles.</div>
+  </footer>
+
+</div>
+</body>
+</html>
